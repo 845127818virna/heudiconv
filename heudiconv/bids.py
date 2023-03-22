@@ -153,7 +153,12 @@ def populate_bids_templates(path, defaults={}):
         " onsets of events (see  '8.5 Task events'  of BIDS specification)")
     create_file_if_missing(op.join(path, 'README'),
         "TODO: Provide description for the dataset -- basic details about the "
-        "study, possibly pointing to pre-registration (if public or embargoed)")
+        "study, possibly pointing to pre-registration (if public or embargoed)"
+        "TODO: Provide description for the dataset -- basic details about the "
+        "study, possibly pointing to pre-registration (if public or embargoed)"
+        "TODO: Provide description for the dataset -- basic details about the "
+        "study, possibly pointing to pre-registration (if public or embargoed)"
+        )
     create_file_if_missing(op.join(path, 'scans.json'),
         json_dumps(SCANS_FILE_FIELDS, sort_keys=False)
     )
