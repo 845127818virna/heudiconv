@@ -22,7 +22,7 @@ import warnings
 with warnings.catch_warnings():
     warnings.simplefilter("ignore")
     # suppress warning
-    import dicomwrappers as dw
+    from . import dicomwrappers as dw
 
 lgr = logging.getLogger(__name__)
 total_files = 0

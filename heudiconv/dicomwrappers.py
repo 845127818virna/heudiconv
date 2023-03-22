@@ -510,11 +510,12 @@ class MultiframeWrapper(Wrapper):
         if hasattr(first_frame, 'get') and first_frame.get([0x18, 0x9117]):
             # DWI image may include derived isotropic, ADC or trace volume
             try:
-                self.frames = pydicom.Sequence(
-                    frame
-                    for frame in self.frames
-                    if frame.MRDiffusionSequence[0].DiffusionDirectionality != 'ISOTROPIC'
-                )
+                #self.frames = pydicom.Sequence(
+                #    frame
+                #    for frame in self.frames
+                #    if frame.MRDiffusionSequence[0].DiffusionDirectionality != 'ISOTROPIC'
+                #)
+                self.frames = pydicom.Sequence(frame for frame in self.frames)
             except IndexError:
                 # Sequence tag is found but missing items!
                 raise WrapperError('Diffusion file missing information')
