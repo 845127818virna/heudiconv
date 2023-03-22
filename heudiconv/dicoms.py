@@ -6,6 +6,7 @@ import logging
 from collections import OrderedDict
 import tarfile
 
+# 20221207 Yuexin Xi -bug: sequence_name is not loaded - add [0018, 9005] tag
 from typing import List, Optional
 
 from .external.pydicom import dcm
@@ -21,7 +22,7 @@ import warnings
 with warnings.catch_warnings():
     warnings.simplefilter("ignore")
     # suppress warning
-    import nibabel.nicom.dicomwrappers as dw
+    import dicomwrappers as dw
 
 lgr = logging.getLogger(__name__)
 total_files = 0
@@ -56,8 +57,11 @@ def create_seqinfo(mw, series_files, series_id):
         # GE and Philips
         sequence_name = dcminfo[0x18, 0x24].value
     elif dcminfo.get([0x19, 0x109c]):
-        # Siemens
+        # Siemens PulseSeqName
         sequence_name = dcminfo[0x19, 0x109c].value
+    elif dcminfo.get([0x18,0x9005]):
+        # Siemens Pulse Sequence Name
+        sequence_name = dcminfo[0x18, 0x9005].value
     else:
         sequence_name = ""
 

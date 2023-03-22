@@ -8,6 +8,7 @@ import shutil
 import random
 import re
 
+# 20221208 Yuexin Xi add "_phase" in unsupported type in update_multiecho_name
 from .due import due, Doi
 
 from .utils import (
@@ -337,7 +338,7 @@ def update_multiecho_name(metadata, filename, echo_times):
     # Field maps separate echoes differently, so do not attempt to update any filenames with these
     # suffixes
     unsupported_types = [
-        '_magnitude', '_magnitude1', '_magnitude2',
+        '_magnitude', '_magnitude1', '_magnitude2', '_phase'
         '_phasediff', '_phase1', '_phase2', '_fieldmap'
     ]
     if any(ut in filename for ut in unsupported_types):
