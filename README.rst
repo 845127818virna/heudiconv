@@ -100,3 +100,11 @@ For a detailed into, see our `contributing guide <CONTRIBUTING.rst>`_.
 
 Our releases are packaged using Intuit auto, with the corresponding workflow including
 Docker image preparation being found in ``.github/workflows/release.yml``.
+
+How is this repo different from nipy/heudiconv?
+------------------------------------------------
+1. add dicomwrappers.py so that derived file can be processed.
+2. "_phase" outputs from multi echo will be updated to "_phase1" and "_phase2" instead of "echo-01_phase" and "echo-02_phase".
+3. It also looks at [0x18, 0x9005] PulseSequenceName tag when reading sequence name in addition to [0x18, 0x24] and [0x19, 0x109c].
+4. The "README in BIDS folder will be longer to pass fMRIPrep BIDS format check.
+5. An additional heuristic_sequence.py is added in heuristics/.
