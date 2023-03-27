@@ -1,0 +1,80 @@
+{
+    "name": "heudiconv",
+    "description": "Runs heudiconv on a dicom scans and outputs nifti files in BIDS",
+    "version": "1.0",
+    "schema-version": "1.0",
+    "type": "docker",
+    "command-line": "heudiconv --files /dicom -o /nifti -f heuristic_sequence #SUBJECT_ID# -c dcm2niix -b --overwrite --minmeta",
+    "workdir": "/src",
+    "override-entrypoint": true,
+    "mounts": [
+        {
+            "name": "dicom_in",
+            "writable": false,
+            "path": "/dicom"
+        },
+        {
+            "name": "nifti_out",
+            "writable": true,
+            "path": "/nifti"
+        }
+    ],
+    "inputs": [
+        {
+            "name": "subject_id",
+            "description": "the ID of the subject",
+            "type": "string",
+            "required": true,
+            "replacement-key": "#SUBJECT_ID",
+            "command-line-flag": "-s"
+        }
+    ],
+    "outputs": [
+        {
+            "name": "nifti",
+            "description": "the converted nifti files",
+            "mount":"nifti_out",
+            "required": true
+        }
+    ],
+    "xnat": [
+        {
+            "name": "heudiconv",
+            "description": "Run heudiconv on a session",
+            "external-inputs": [
+                {
+                    "name": "dicom",
+                    "description": "Input dicom",
+                    "type": "Session",
+                    "required": true,
+                    "provides-files-for-command-mount": "dicom_in"
+                },
+                {
+                    "name": "subject",
+                    "description": "Input subject",
+                    "type": "Subject",
+                    "required": true
+                }
+            ],
+            "derived-inputs": [
+                {
+                    "name": "subject-id",
+                    "description": "The subject's id",
+                    "type": "string",
+                    "derived-from-wrapper-input": "subject",
+                    "derived-from-xnat-object-property": "id",
+                    "provides-value-for-command-input": "subject_id"
+                }
+            ],
+            "output-handlers": [
+                {
+                    "name": "nifti",
+                    "accepts-command-output": "nifti",
+                    "as-a-child-of-wrapper-input": "subject",
+                    "type": "Resource",
+                    "label": "heudiconv"
+                }
+            ]
+        }
+    ]
+}
