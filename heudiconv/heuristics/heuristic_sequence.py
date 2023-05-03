@@ -186,15 +186,15 @@ def infotodict(seqinfo):
             elif (s.series_files == 3):
                 info[template_anat].append({'item': s.series_id, 'acq': '_acq-MP2RAGE', 'part': '', 'suffix': 'T1w'})
                 continue
-            
-        # tir + 2d + 1
-        if ('tir2d1' in s.sequence_name):
-            info[template_anat].append({'item': s.series_id, 'acq': '_acq-WAIR', 'part': '', 'suffix': 'T2w'})
-            continue
         
         # tir_rr + 2d + 1
         if ('tir2d1rr' in s.sequence_name):
             info[template_anat].append({'item': s.series_id, 'acq': '_acq-STIR', 'part': '', 'suffix': 'T2w'})
+            continue
+            
+        # tir + 2d + 1
+        if ('tir2d1' in s.sequence_name):
+            info[template_anat].append({'item': s.series_id, 'acq': '_acq-WAIR', 'part': '', 'suffix': 'T2w'})
             continue
         
         # hippocampus
