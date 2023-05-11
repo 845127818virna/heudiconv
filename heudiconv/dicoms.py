@@ -48,10 +48,14 @@ def create_seqinfo(mw, series_files, series_id):
     # parse DICOM for seqinfo fields
     TR = get_typed_attr(dcminfo, "RepetitionTime", float, -1000) / 1000
     TE = get_typed_attr(dcminfo, "EchoTime", float, -1)
+    if (TR == -1):
+        TR = get_typed_attr(dcminfo.SharedFunctionalGroupsSequence[0].MRTimingAndRelatedParametersSequence[0], "RepetitionTime", float, -1000) / 1000
+    if (TE == -1):
+        TE = get_typed_attr(dcminfo.PerFrameFunctionalGroupsSequence[0].MREchoSequence[0], "EffectiveEchoTime", float, -1)
     refphys = get_typed_attr(dcminfo, "ReferringPhysicianName", str, "")
     image_type = get_typed_attr(dcminfo, "ImageType", tuple, ())
     is_moco = 'MOCO' in image_type
-    series_desc = get_typed_attr(dcminfo, "SeriesDescription", str, "")
+    series_desc = get_typed_attr(dcminfo, "SeriesDescription", str, "")    
 
     if dcminfo.get([0x18, 0x24]):
         # GE and Philips
