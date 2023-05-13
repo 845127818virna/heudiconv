@@ -103,9 +103,10 @@ Docker image preparation being found in ``.github/workflows/release.yml``.
 
 How is this repo different from nipy/heudiconv?
 ------------------------------------------------
-1. Added dicomwrappers.py so that derived file can be processed.
-2. "_phase" outputs from multi echo will be updated to "_phase1" and "_phase2" instead of "echo-01_phase" and "echo-02_phase".
+1. Added modified dicomwrappers.py so that derived file can be processed.
+2. "_phase" outputs from multi echo will be named as "_phase1" and "_phase2" instead of "echo-01_phase" and "echo-02_phase".
 3. We also look at [0x18, 0x9005] PulseSequenceName tag when reading sequence name in addition to [0x18, 0x24] and [0x19, 0x109c].
 4. The "README in BIDS folder will be longer to pass fMRIPrep BIDS format check.
-5. An additional heuristic_sequence.py is added in heuristics/.
-6. We also look at SharedFunctionalGroupsSequence[0].MRTimingAndRelatedParametersSequence[0] and PerFrameFunctionalGroupsSequence[0].MREchoSequence[0] in enhanced dicoms (enhanced mode) for RepetitionTime and EchoTime.
+5. An additional heuristic_sequence.py is added in heuristics/. 
+6. We also look at SharedFunctionalGroupsSequence[0].MRTimingAndRelatedParametersSequence[0] and PerFrameFunctionalGroupsSequence[0].MREchoSequence[0] for TR and TE for enhanced MRI (enhanced mode).
+7. Added TI (inversion time) in seqinfo so that we can use TI in heuristic file to identify image types (e.g., distinguishing between white matter attenuation and fluid attenuation).

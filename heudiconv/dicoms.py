@@ -68,6 +68,11 @@ def create_seqinfo(mw, series_files, series_id):
         sequence_name = dcminfo[0x18, 0x9005].value
     else:
         sequence_name = ""
+    
+    
+    TI = get_typed_attr(dcminfo, "InversionTime", float, -1)
+    if (TI == -1 and hasattr(dcminfo, "SharedFunctionalGroupsSequence")):    
+        TI = get_typed_attr(dcminfo.SharedFunctionalGroupsSequence[0].MRModifierSequence[0], "InversionTimes", float, -1)
 
     # initialized in `group_dicoms_to_seqinfos`
     global total_files
@@ -102,6 +107,7 @@ def create_seqinfo(mw, series_files, series_id):
         date=dcminfo.get('AcquisitionDate'),
         series_uid=dcminfo.get('SeriesInstanceUID'),
         time=dcminfo.get('AcquisitionTime'),
+        TI=TI,
     )
     return seqinfo
 
