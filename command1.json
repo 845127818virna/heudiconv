@@ -5,7 +5,7 @@
   "schema-version": "1.0",
   "image": "yuexinxi/heudiconv:latest",
   "type": "docker",
-  "command-line": "heudiconv --files /dicom -o /nifti -f heuristic_sequence #SUBJECT_ID# -c dcm2niix -b --overwrite --minmeta",
+  "command-line": "heudiconv --files /dicom -o /nifti -f heuristic_sequence #SUBJECT_ID# #SESSION_ID# -c dcm2niix -b --overwrite --minmeta",
   "override-entrypoint": true,
   "mounts": [
     {
@@ -24,11 +24,20 @@
   "inputs": [
     {
       "name": "subject_id",
-      "description": "the ID of the subject",
+      "description": "XNAT ID of the subject",
       "type": "string",
       "required": true,
       "replacement-key": "#SUBJECT_ID#",
       "command-line-flag": "-s",
+      "select-values": []
+    },
+    {
+      "name": "session_id",
+      "description": "XNAT ID of the session",
+      "type": "string",
+      "required": true,
+      "replacement-key": "#SESSION_ID#",
+      "command-line-flag": "-ss",
       "select-values": []
     }
   ],
@@ -57,7 +66,39 @@
           "load-children": true
         }
       ],
-      "derived-inputs": [],
+      "derived-inputs": [
+        {
+          "name": "session-id",
+          "description": "Session ID",
+          "type": "string",
+          "required": true,
+          "provides-value-for-command-input": "session_id",
+          "load-children": true,
+          "derived-from-wrapper-input": "session",
+          "derived-from-xnat-object-property": "label",
+          "multiple": false
+        },
+        {
+          "name": "subject",
+          "type": "Subject",
+          "required": true,
+          "user-settable": false,
+          "load-children": false,
+          "derived-from-wrapper-input": "session",
+          "multiple": false
+        },
+        {
+          "name": "subject-id",
+          "description": "Subject ID",
+          "type": "string",
+          "required": true,
+          "provides-value-for-command-input": "subject_id",
+          "load-children": true,
+          "derived-from-wrapper-input": "subject",
+          "derived-from-xnat-object-property": "label",
+          "multiple": false
+        }
+      ],
       "output-handlers": [
         {
           "name": "output",
