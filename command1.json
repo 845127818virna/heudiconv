@@ -1,6 +1,6 @@
 {
-  "name": "yuexinxi/heudiconv",
-  "description": "Runs yuexinxi/heudiconv on a dicom scans and outputs nifti files in BIDS",
+  "name": "heudiconv",
+  "description": "Runs heudiconv on a dicom scans and outputs nifti files in BIDS",
   "version": "1.0",
   "schema-version": "1.0",
   "image": "yuexinxi/heudiconv:latest",
@@ -52,7 +52,7 @@
   "xnat": [
     {
       "name": "heudiconv",
-      "description": "Run yuexinxi/heudiconv on a session",
+      "description": "Run heudiconv with a session mounted",
       "contexts": [
         "xnat:imageSessionData"
       ],
