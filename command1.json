@@ -1,6 +1,6 @@
 {
   "name": "heudiconv",
-  "description": "Runs heudiconv on a dicom scans and outputs nifti files in BIDS",
+  "description": "Runs heudiconv on dicom scans and outputs nifti files in BIDS",
   "version": "1.0",
   "schema-version": "1.0",
   "image": "yuexinxi/heudiconv:latest",
@@ -52,7 +52,7 @@
   "xnat": [
     {
       "name": "heudiconv",
-      "description": "Run heudiconv with a session mounted",
+      "description": "Run heudiconv with a session mounted to convert dicom to nifti",
       "contexts": [
         "xnat:imageSessionData"
       ],
