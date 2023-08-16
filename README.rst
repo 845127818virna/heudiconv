@@ -101,7 +101,7 @@ For a detailed into, see our `contributing guide <CONTRIBUTING.rst>`_.
 Our releases are packaged using Intuit auto, with the corresponding workflow including
 Docker image preparation being found in ``.github/workflows/release.yml``.
 
-How is this repo different from nipy/heudiconv?
+How is this repo different from nipy/heudiconv v0.12.2?
 ------------------------------------------------
 1. Added modified dicomwrappers.py so that derived file can be processed.
 2. "_phase" outputs from multi echo will be named as "_phase1" and "_phase2" instead of "echo-01_phase" and "echo-02_phase".
